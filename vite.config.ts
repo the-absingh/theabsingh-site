@@ -13,6 +13,8 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
 const localBindingConfig = {
   main: "./worker/index.ts",
+  keep_vars: true,
+  secrets: { required: ["OPENAI_API_KEY"] },
   compatibility_flags: ["nodejs_compat"],
   d1_databases: d1
     ? [
