@@ -99,7 +99,9 @@ export async function POST(request: Request) {
   }
 
   const bindings = env as unknown as { OPENAI_API_KEY?: string; OPENAI_MODEL?: string };
-  if (!bindings.OPENAI_API_KEY) {
+  const apiKey = bindings.OPENAI_API_KEY || process.env.OPENAI_API_KEY;
+  const model = bindings.OPENAI_MODEL || process.env.OPENAI_MODEL || "gpt-4o-mini";
+  if (!apiKey) {
     return Response.json({ error: "The assistant has not been configured yet." }, { status: 503 });
   }
 
@@ -107,11 +109,11 @@ export async function POST(request: Request) {
     const openAIResponse = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${bindings.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: bindings.OPENAI_MODEL || "gpt-4o-mini",
+        model,
         instructions: INSTRUCTIONS,
         input: question,
         max_output_tokens: 350,
