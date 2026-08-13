@@ -56,60 +56,71 @@ export function AskWidget() {
   }
 
   return (
-    <div className="ask-widget">
-      <div className="widget-header">
-        <div className="window-controls" aria-hidden="true"><span /><span /><span /></div>
-        <span>WORK_QUERY.EXE</span>
-        <span className="widget-status"><i /> ONLINE</span>
-      </div>
+    <div className="console-frame">
+      <div className="console-reflection" aria-hidden="true" />
+      <div className="ask-widget">
+        <div className="widget-header">
+          <div className="console-brand"><span className="console-mark">A</span><span>Systems archive</span></div>
+          <span className="widget-status"><i /> Live · Grounded</span>
+        </div>
 
-      <div className="widget-body" aria-live="polite">
-        {messages.length === 0 ? (
-          <div className="widget-intro">
-            <span className="prompt-symbol">?</span>
-            <h2>Ask about my work.</h2>
-            <p>This AI is limited to the four case studies on this site. Ask how something was built, what changed, or what the result was.</p>
-            <div className="suggestion-list">
-              {suggestions.map((suggestion) => (
-                <button key={suggestion} type="button" onClick={() => void ask(suggestion)} disabled={pending}>
-                  <span>↳</span>{suggestion}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="messages">
-            {messages.map((message, index) => (
-              <div className={`message message-${message.role}`} key={`${message.role}-${index}`}>
-                <span>{message.role === "user" ? "YOU" : "SYSTEM"}</span>
-                <p>{message.content}</p>
+        <div className="widget-content">
+          <div className="widget-body" aria-live="polite">
+            {messages.length === 0 ? (
+              <div className="widget-intro">
+                <p className="console-kicker">Ask the work, not a sales page</p>
+                <h2>See how the systems<br />actually work.</h2>
+                <p>Ask about architecture, constraints or measurable outcomes. Answers stay grounded in verified project records.</p>
+                <div className="suggestion-list">
+                  {suggestions.map((suggestion, index) => (
+                    <button key={suggestion} type="button" onClick={() => void ask(suggestion)} disabled={pending}>
+                      <span>0{index + 1}</span><b>{suggestion}</b><i>↗</i>
+                    </button>
+                  ))}
+                </div>
               </div>
-            ))}
-            {pending && <div className="thinking"><span /><span /><span /> Reading case studies</div>}
+            ) : (
+              <div className="messages">
+                {messages.map((message, index) => (
+                  <div className={`message message-${message.role}`} key={`${message.role}-${index}`}>
+                    <span>{message.role === "user" ? "Your question" : "System answer"}</span>
+                    <p>{message.content}</p>
+                  </div>
+                ))}
+                {pending && <div className="thinking"><span /><span /><span /> Reading the build archive</div>}
+              </div>
+            )}
+            {error && <p className="widget-error" role="alert">{error}</p>}
           </div>
-        )}
-        {error && <p className="widget-error" role="alert">{error}</p>}
-      </div>
 
-      <form className="widget-form" onSubmit={onSubmit}>
-        <label className="sr-only" htmlFor="work-question">Ask a question about Ab Singh’s work</label>
-        <span aria-hidden="true">›</span>
-        <input
-          ref={inputRef}
-          id="work-question"
-          value={question}
-          onChange={(event) => setQuestion(event.target.value)}
-          maxLength={500}
-          placeholder="Type a question..."
-          disabled={pending}
-          autoComplete="off"
-        />
-        <button type="submit" disabled={pending || !question.trim()} aria-label="Send question">SEND ↵</button>
-      </form>
+          <aside className="console-meta" aria-label="AI system status">
+            <div><span>Knowledge</span><strong>Verified work</strong></div>
+            <div><span>Scope</span><strong>Work only</strong></div>
+            <div><span>Access</span><strong>Live</strong></div>
+            <p>No generic answers.<br />No invented claims.</p>
+          </aside>
+        </div>
 
-      <div className="widget-footer">
-        <span>GROUNDED IN 4 CASE STUDIES</span>
-        {messages.length > 0 && <button type="button" onClick={reset}>CLEAR LOG</button>}
+        <form className="widget-form" onSubmit={onSubmit}>
+          <label className="sr-only" htmlFor="work-question">Ask a question about Ab Singh’s work</label>
+          <span aria-hidden="true">⌘</span>
+          <input
+            ref={inputRef}
+            id="work-question"
+            value={question}
+            onChange={(event) => setQuestion(event.target.value)}
+            maxLength={500}
+            placeholder="Ask how a system was built..."
+            disabled={pending}
+            autoComplete="off"
+          />
+          <button type="submit" disabled={pending || !question.trim()} aria-label="Send question"><span>Ask</span> ↗</button>
+        </form>
+
+        <div className="widget-footer">
+          <span>OPENAI · SERVER-SIDE · PROJECT-GROUNDED</span>
+          {messages.length > 0 && <button type="button" onClick={reset}>Clear conversation</button>}
+        </div>
       </div>
     </div>
   );
