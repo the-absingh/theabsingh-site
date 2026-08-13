@@ -111,12 +111,10 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: bindings.OPENAI_MODEL || "gpt-5.6-luna",
+        model: bindings.OPENAI_MODEL || "gpt-4o-mini",
         instructions: INSTRUCTIONS,
         input: question,
         max_output_tokens: 350,
-        reasoning: { effort: "none" },
-        text: { verbosity: "low" },
         store: false,
       }),
     });

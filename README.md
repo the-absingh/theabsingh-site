@@ -18,7 +18,7 @@ The public page is served at `/`. The grounded case-study assistant posts questi
 ## Environment variables
 
 - `OPENAI_API_KEY` — required for the assistant.
-- `OPENAI_MODEL` — optional; defaults to `gpt-5.6-luna`.
+- `OPENAI_MODEL` — optional; defaults to `gpt-4o-mini`.
 
 Never commit `.env.local` or the API key. Add the same variables as encrypted secrets in the Cloudflare project before deployment.
 
