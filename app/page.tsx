@@ -24,7 +24,7 @@ export default function Home() {
             <a href="#content">Content automation</a>
           </nav>
         </div>
-        <a className="nav-contact" href="https://calendly.com/theabsingh/tech-related" target="_blank" rel="noreferrer">Start a project <span>↗</span></a>
+        <a className="nav-contact" href="https://calendly.com/theabsingh/tech-related" target="_blank" rel="noreferrer">Book a call <span>↗</span></a>
       </header>
 
       <section className="product-hero" id="top">
